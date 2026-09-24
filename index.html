@@ -1,0 +1,2103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+  <meta
+    name="description"
+    content="TapTap 手游社区 & 游戏平台——发现好手游，遇见同好玩家。"
+  />
+
+  <title>TapTap · 发现好手游，遇见同好玩家</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --taptap-green: #20d6a4;
+      --taptap-green-light: #5ff3c8;
+      --bg: #101414;
+      --bg-soft: #151b1b;
+      --text: #ffffff;
+      --muted: #9aa6a3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        "Inter",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "PingFang SC",
+        "Microsoft YaHei",
+        sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: rgba(32, 214, 164, 0.28);
+      color: #fff;
+    }
+
+    /* =========================
+       顶部滚动进度条
+    ========================== */
+
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #20d6a4;
+      z-index: 99999;
+      transform-origin: left center;
+      box-shadow: 0 0 12px rgba(32, 214, 164, 0.75);
+      pointer-events: none;
+    }
+
+    /* =========================
+       Navbar
+    ========================== */
+
+    #navbar {
+      transition:
+        background-color 0.35s ease,
+        backdrop-filter 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+    }
+
+    #navbar.nav-scrolled {
+      background: rgba(16, 20, 20, 0.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.16);
+    }
+
+    /* =========================
+       Hero
+    ========================== */
+
+    .hero-section {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-glow {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(80px);
+      pointer-events: none;
+      opacity: 0.22;
+      will-change: transform;
+    }
+
+    .hero-glow-1 {
+      width: 420px;
+      height: 420px;
+      top: 12%;
+      left: 5%;
+      background: rgba(32, 214, 164, 0.28);
+    }
+
+    .hero-glow-2 {
+      width: 520px;
+      height: 520px;
+      right: -100px;
+      top: 18%;
+      background: rgba(32, 214, 164, 0.16);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
+      pointer-events: none;
+      opacity: 0.45;
+    }
+
+    #particles-js {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: auto;
+    }
+
+    .hero-title-line {
+      overflow: hidden;
+      display: block;
+    }
+
+    .hero-title-inner {
+      display: block;
+      transform: translateY(110%);
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+
+    .gradient-text {
+      background: linear-gradient(
+        120deg,
+        #ffffff 0%,
+        #ffffff 48%,
+        #20d6a4 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* =========================
+       Phone mockup
+    ========================== */
+
+    .phone-wrap {
+      position: relative;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .phone-shadow {
+      position: absolute;
+      width: 80%;
+      height: 80px;
+      bottom: -40px;
+      left: 10%;
+      border-radius: 50%;
+      background: rgba(32, 214, 164, 0.16);
+      filter: blur(35px);
+      z-index: -1;
+    }
+
+    .phone {
+      width: min(310px, 72vw);
+      aspect-ratio: 0.485;
+      border-radius: 42px;
+      padding: 8px;
+      background:
+        linear-gradient(145deg, #39413f, #121616 55%, #202725);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow:
+        0 45px 90px rgba(0,0,0,0.48),
+        inset 0 0 0 1px rgba(255,255,255,0.04);
+      position: relative;
+      transform-style: preserve-3d;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 13px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 34%;
+      height: 23px;
+      background: #050707;
+      border-radius: 999px;
+      z-index: 5;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 36px;
+      overflow: hidden;
+      background: #151b1b;
+      position: relative;
+    }
+
+    .phone-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* =========================
+       Floating cards
+    ========================== */
+
+    .floating-card {
+      position: absolute;
+      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(24,30,29,0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.26);
+      border-radius: 18px;
+      will-change: transform;
+    }
+
+    .floating-card-1 {
+      left: -125px;
+      top: 19%;
+    }
+
+    .floating-card-2 {
+      right: -135px;
+      bottom: 20%;
+    }
+
+    /* =========================
+       Buttons
+    ========================== */
+
+    .download-btn {
+      position: relative;
+      overflow: hidden;
+      transition:
+        transform 0.35s cubic-bezier(.22,1,.36,1),
+        box-shadow 0.35s ease;
+    }
+
+    .download-btn:hover {
+      transform: scale(1.045);
+      box-shadow:
+        0 0 0 1px rgba(32,214,164,0.15),
+        0 0 32px rgba(32,214,164,0.25);
+    }
+
+    .download-btn::after {
+      content: "";
+      position: absolute;
+      top: -120%;
+      left: -45%;
+      width: 30%;
+      height: 340%;
+      transform: rotate(22deg);
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.38),
+        transparent
+      );
+      animation: button-shine 4.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes button-shine {
+      0%, 60% {
+        left: -45%;
+      }
+      100% {
+        left: 140%;
+      }
+    }
+
+    /* =========================
+       Section
+    ========================== */
+
+    .section {
+      position: relative;
+      padding: 120px 0;
+    }
+
+    .section-title {
+      letter-spacing: -0.045em;
+    }
+
+    /* =========================
+       Feature cards
+    ========================== */
+
+    .feature-card {
+      transform-style: preserve-3d;
+      will-change: transform;
+      border: 1px solid rgba(255,255,255,0.07);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,0.045),
+          rgba(255,255,255,0.018)
+        );
+      transition:
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(32,214,164,0.24);
+      box-shadow:
+        0 25px 65px rgba(0,0,0,0.28),
+        0 0 34px rgba(32,214,164,0.07);
+    }
+
+    .feature-icon {
+      transition:
+        transform 0.35s cubic-bezier(.22,1,.36,1),
+        background-color 0.35s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: translateY(-3px) scale(1.06);
+      background: rgba(32,214,164,0.16);
+    }
+
+    /* =========================
+       Screenshot carousel
+    ========================== */
+
+    .screenshot-viewport {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .screenshot-track {
+      display: flex;
+      gap: 24px;
+      transition: transform 0.7s cubic-bezier(.22,1,.36,1);
+      will-change: transform;
+    }
+
+    .screenshot-item {
+      flex: 0 0 min(300px, 76vw);
+      transform-style: preserve-3d;
+      will-change: transform;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #171d1c;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 55px rgba(0,0,0,0.25);
+    }
+
+    .screenshot-item img {
+      width: 100%;
+      aspect-ratio: 0.58;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* =========================
+       Scene / CTA
+    ========================== */
+
+    .scene-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(
+          circle at 50% 20%,
+          rgba(32,214,164,0.12),
+          transparent 40%
+        ),
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,0.04),
+          rgba(255,255,255,0.015)
+        );
+    }
+
+    .qr-placeholder {
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.95), rgba(235,240,238,0.95));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .qr-placeholder::before,
+    .qr-placeholder::after {
+      content: "";
+      position: absolute;
+      background: #101414;
+    }
+
+    .qr-placeholder::before {
+      width: 32px;
+      height: 32px;
+      top: 12px;
+      left: 12px;
+      box-shadow:
+        65px 0 0 #101414,
+        0 65px 0 #101414,
+        65px 65px 0 #101414;
+    }
+
+    .qr-placeholder::after {
+      width: 8px;
+      height: 8px;
+      top: 50%;
+      left: 50%;
+      box-shadow:
+        -25px -18px 0 #101414,
+        22px -25px 0 #101414,
+        -12px 26px 0 #101414,
+        30px 18px 0 #101414,
+        -38px 4px 0 #101414;
+    }
+
+    /* =========================
+       Number
+    ========================== */
+
+    .counter {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* =========================
+       Mobile
+    ========================== */
+
+    @media (max-width: 767px) {
+      .section {
+        padding: 84px 0;
+      }
+
+      .floating-card-1 {
+        left: -8px;
+        top: 14%;
+        transform: scale(0.78);
+      }
+
+      .floating-card-2 {
+        right: -8px;
+        bottom: 13%;
+        transform: scale(0.78);
+      }
+
+      .hero-glow {
+        filter: blur(65px);
+        opacity: 0.17;
+      }
+
+      .phone {
+        width: min(275px, 70vw);
+      }
+
+      .screenshot-track {
+        gap: 16px;
+      }
+
+      .screenshot-item {
+        flex-basis: min(245px, 72vw);
+      }
+    }
+
+    /* =========================
+       Reduced Motion
+    ========================== */
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto !important;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 顶部滚动进度 -->
+  <div id="scroll-progress"></div>
+
+  <!-- =========================
+       Navigation
+  ========================== -->
+
+  <header
+    id="navbar"
+    class="fixed top-0 left-0 right-0 z-50 border-b border-transparent"
+  >
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="flex h-20 items-center justify-between">
+
+        <a
+          href="#"
+          class="flex items-center gap-3"
+          aria-label="TapTap"
+        >
+          <div
+            class="flex h-9 w-9 items-center justify-center rounded-xl"
+            style="background:#20D6A4;"
+          >
+            <i class="fa-solid fa-gamepad text-[#101414]"></i>
+          </div>
+
+          <span class="text-xl font-extrabold tracking-tight">
+            TapTap
+          </span>
+        </a>
+
+        <nav class="hidden items-center gap-8 md:flex">
+          <a
+            href="#features"
+            class="text-sm text-white/65 transition hover:text-white"
+          >
+            产品亮点
+          </a>
+
+          <a
+            href="#preview"
+            class="text-sm text-white/65 transition hover:text-white"
+          >
+            APP预览
+          </a>
+
+          <a
+            href="#scene"
+            class="text-sm text-white/65 transition hover:text-white"
+          >
+            游戏社区
+          </a>
+
+          <a
+            href="#download"
+            class="rounded-full border border-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-[#20D6A4]/40 hover:text-[#20D6A4]"
+          >
+            下载 APP
+          </a>
+        </nav>
+
+        <a
+          href="#download"
+          class="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold md:hidden"
+        >
+          下载
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- =========================
+       Hero
+  ========================== -->
+
+  <main>
+
+    <section class="hero-section" id="hero">
+
+      <div id="particles-js"></div>
+
+      <div class="hero-grid"></div>
+
+      <div
+        class="hero-glow hero-glow-1"
+        data-parallax="0.12"
+      ></div>
+
+      <div
+        class="hero-glow hero-glow-2"
+        data-parallax="0.2"
+      ></div>
+
+      <div class="relative z-10 mx-auto flex min-h-svh max-w-7xl items-center px-5 pt-24 lg:px-8">
+
+        <div class="grid w-full items-center gap-16 lg:grid-cols-[1fr_0.9fr]">
+
+          <!-- Hero文字 -->
+          <div
+            id="hero-copy"
+            class="max-w-2xl"
+            data-parallax="0.18"
+          >
+
+            <div
+              class="mb-6 inline-flex items-center gap-2 rounded-full border border-[#20D6A4]/15 bg-[#20D6A4]/5 px-4 py-2 text-sm text-[#7af5d0]"
+            >
+              <span class="h-1.5 w-1.5 rounded-full bg-[#20D6A4] shadow-[0_0_10px_#20D6A4]"></span>
+              手游玩家的游戏社区
+            </div>
+
+            <h1
+              class="text-5xl font-black leading-[1.04] tracking-[-0.055em] sm:text-6xl lg:text-7xl xl:text-[84px]"
+            >
+              <span class="hero-title-line">
+                <span class="hero-title-inner">
+                  发现好手游，
+                </span>
+              </span>
+
+              <span class="hero-title-line">
+                <span class="hero-title-inner gradient-text">
+                  遇见同好玩家
+                </span>
+              </span>
+            </h1>
+
+            <p class="mt-7 max-w-xl text-base leading-8 text-white/55 sm:text-lg">
+              TapTap 手游社区 &amp; 游戏平台
+            </p>
+
+            <p class="mt-4 max-w-xl text-sm leading-7 text-white/38 sm:text-base">
+              发现高质量手游，看看真实玩家评价，
+              抢先预约新游戏，和同好玩家一起聊游戏。
+            </p>
+
+            <div class="mt-9 flex flex-wrap items-center gap-4">
+
+              <a
+                href="#download"
+                class="download-btn inline-flex items-center gap-3 rounded-full bg-[#20D6A4] px-7 py-4 text-sm font-bold text-[#08100e]"
+              >
+                <i class="fa-solid fa-download"></i>
+                免费下载TapTap APP
+              </a>
+
+              <a
+                href="#preview"
+                class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.025] px-6 py-4 text-sm font-semibold text-white/75 transition hover:border-white/20 hover:bg-white/[0.05] hover:text-white"
+              >
+                查看 APP
+                <i class="fa-solid fa-arrow-down text-xs"></i>
+              </a>
+
+            </div>
+
+            <div class="mt-9 flex items-center gap-7 text-sm text-white/38">
+
+              <div>
+                <span class="counter block text-xl font-bold text-white/85" data-target="12846">
+                  0
+                </span>
+                条新动态
+              </div>
+
+              <div class="h-8 w-px bg-white/10"></div>
+
+              <div>
+                <span class="counter block text-xl font-bold text-white/85" data-target="10000">
+                  0
+                </span>
+                + 游戏
+              </div>
+
+              <div class="h-8 w-px bg-white/10"></div>
+
+              <div>
+                <span class="counter block text-xl font-bold text-white/85" data-target="24">
+                  0
+                </span>
+                H 新鲜内容
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- 手机区域 -->
+          <div class="relative flex min-h-[600px] items-center justify-center">
+
+            <div
+              class="hero-glow absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2"
+              style="background:rgba(32,214,164,.18);"
+              data-parallax="0.3"
+            ></div>
+
+            <div
+              class="phone-wrap"
+              id="phone"
+              data-tilt
+              data-tilt-max="7"
+              data-tilt-speed="600"
+              data-tilt-scale="1.015"
+              data-tilt-perspective="1000"
+              data-parallax="0.26"
+            >
+
+              <div class="phone">
+
+                <div class="phone-screen">
+
+                  <img
+                    src="https://placehold.co/620x1280/17201e/20D6A4?text=TapTap+APP"
+                    alt="TapTap APP界面"
+                  />
+
+                </div>
+
+              </div>
+
+              <div class="phone-shadow"></div>
+            </div>
+
+
+            <!-- 浮动卡片 1 -->
+            <div
+              class="floating-card floating-card-1 p-4"
+              data-parallax="0.38"
+            >
+              <div class="flex items-center gap-3">
+
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#20D6A4]/10 text-[#20D6A4]">
+                  <i class="fa-solid fa-star"></i>
+                </div>
+
+                <div>
+                  <div class="text-xs text-white/40">
+                    玩家评分
+                  </div>
+
+                  <div class="mt-0.5 text-sm font-bold">
+                    真实玩家评价
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <!-- 浮动卡片 2 -->
+            <div
+              class="floating-card floating-card-2 p-4"
+              data-parallax="0.48"
+            >
+              <div class="flex items-center gap-3">
+
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#20D6A4]/10 text-[#20D6A4]">
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+
+                <div>
+                  <div class="text-xs text-white/40">
+                    游戏状态
+                  </div>
+
+                  <div class="mt-0.5 text-sm font-bold">
+                    抢先体验
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         Features
+    ========================== -->
+
+    <section
+      id="features"
+      class="section"
+    >
+
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+
+        <div class="mx-auto max-w-2xl text-center">
+
+          <div class="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-[#20D6A4]">
+            Explore More
+          </div>
+
+          <h2 class="section-title text-4xl font-black sm:text-5xl">
+            不只是下载游戏
+          </h2>
+
+          <p class="mt-5 text-base leading-8 text-white/45">
+            从发现游戏，到和玩家交流，
+            TapTap 把手游体验连接在一起。
+          </p>
+
+        </div>
+
+
+        <div class="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
+          <!-- Card 1 -->
+          <article
+            class="feature-card rounded-3xl p-7"
+            data-tilt
+            data-tilt-max="5"
+            data-tilt-speed="700"
+            data-tilt-perspective="1100"
+          >
+
+            <div class="feature-icon flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.045] text-xl text-[#20D6A4]">
+              <i class="fa-solid fa-gamepad"></i>
+            </div>
+
+            <h3 class="mt-7 text-lg font-bold">
+              海量正版手游 &amp; 独立游戏
+            </h3>
+
+            <p class="mt-3 text-sm leading-7 text-white/40">
+              发现热门作品与优秀独立游戏，找到真正适合自己的游戏。
+            </p>
+
+          </article>
+
+
+          <!-- Card 2 -->
+          <article
+            class="feature-card rounded-3xl p-7"
+            data-tilt
+            data-tilt-max="5"
+            data-tilt-speed="700"
+            data-tilt-perspective="1100"
+          >
+
+            <div class="feature-icon flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.045] text-xl text-[#20D6A4]">
+              <i class="fa-solid fa-comments"></i>
+            </div>
+
+            <h3 class="mt-7 text-lg font-bold">
+              真实玩家测评社区
+            </h3>
+
+            <p class="mt-3 text-sm leading-7 text-white/40">
+              看真实玩家体验和评价，在下载之前先了解一款游戏。
+            </p>
+
+          </article>
+
+
+          <!-- Card 3 -->
+          <article
+            class="feature-card rounded-3xl p-7"
+            data-tilt
+            data-tilt-max="5"
+            data-tilt-speed="700"
+            data-tilt-perspective="1100"
+          >
+
+            <div class="feature-icon flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.045] text-xl text-[#20D6A4]">
+              <i class="fa-solid fa-calendar-check"></i>
+            </div>
+
+            <h3 class="mt-7 text-lg font-bold">
+              游戏预约、测试抢先玩
+            </h3>
+
+            <p class="mt-3 text-sm leading-7 text-white/40">
+              提前预约热门新游，关注测试动态，抢先进入新世界。
+            </p>
+
+          </article>
+
+
+          <!-- Card 4 -->
+          <article
+            class="feature-card rounded-3xl p-7"
+            data-tilt
+            data-tilt-max="5"
+            data-tilt-speed="700"
+            data-tilt-perspective="1100"
+          >
+
+            <div class="feature-icon flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.045] text-xl text-[#20D6A4]">
+              <i class="fa-solid fa-play"></i>
+            </div>
+
+            <h3 class="mt-7 text-lg font-bold">
+              游戏视频、攻略直播
+            </h3>
+
+            <p class="mt-3 text-sm leading-7 text-white/40">
+              游戏视频、攻略内容和直播，一站式获取游戏灵感。
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         Preview
+    ========================== -->
+
+    <section
+      id="preview"
+      class="section overflow-hidden"
+    >
+
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+
+        <div class="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+
+          <div>
+
+            <div class="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-[#20D6A4]">
+              APP Preview
+            </div>
+
+            <h2 class="section-title text-4xl font-black sm:text-5xl">
+              打开 TapTap
+              <span class="gradient-text">发现更多</span>
+            </h2>
+
+            <p class="mt-5 max-w-xl text-base leading-8 text-white/45">
+              热门游戏、玩家讨论、游戏资讯与精彩内容，都在你的掌心。
+            </p>
+
+          </div>
+
+
+          <div class="flex gap-3">
+
+            <button
+              id="prevBtn"
+              class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.025] text-white/70 transition hover:border-[#20D6A4]/30 hover:text-[#20D6A4]"
+              aria-label="上一张"
+            >
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+
+            <button
+              id="nextBtn"
+              class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.025] text-white/70 transition hover:border-[#20D6A4]/30 hover:text-[#20D6A4]"
+              aria-label="下一张"
+            >
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="screenshot-viewport mt-14">
+
+          <div
+            id="screenshotTrack"
+            class="screenshot-track"
+          >
+
+            <div
+              class="screenshot-item"
+              data-tilt
+              data-tilt-max="5"
+              data-tilt-speed="650"
+              data-tilt-perspective="1200"
+            >
+              <img
+                src="https://placehold.co/620x1080/18211f/20D6A4?text=Game+Discover"
+                alt="TapTap 游戏发现"
+              />
+            </div>
+
+            <div
+              class="screenshot-item"
+              data-tilt
+              data-tilt-max="5"
+              data-tilt-speed="650"
+              data-tilt-perspective="1200"
+            >
+              <img
+                src="https://placehold.co/620x1080/141a19/20D6A4?text=Game+Community"
+                alt="TapTap 游戏社区"
+              />
+            </div>
+
+            <div
+              class="screenshot-item"
+              data-tilt
+              data-tilt-max="5"
+              data-tilt-speed="650"
+              data-tilt-perspective="1200"
+            >
+              <img
+                src="https://placehold.co/620x1080/19201f/20D6A4?text=Game+Review"
+                alt="TapTap 游戏测评"
+              />
+            </div>
+
+            <div
+              class="screenshot-item"
+              data-tilt
+              data-tilt-max="5"
+              data-tilt-speed="650"
+              data-tilt-perspective="1200"
+            >
+              <img
+                src="https://placehold.co/620x1080/131918/20D6A4?text=Game+Video"
+                alt="TapTap 游戏视频"
+              />
+            </div>
+
+            <div
+              class="screenshot-item"
+              data-tilt
+              data-tilt-max="5"
+              data-tilt-speed="650"
+              data-tilt-perspective="1200"
+            >
+              <img
+                src="https://placehold.co/620x1080/18201e/20D6A4?text=Game+Live"
+                alt="TapTap 游戏直播"
+              />
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         Scene
+    ========================== -->
+
+    <section
+      id="scene"
+      class="section"
+    >
+
+      <div class="mx-auto max-w-6xl px-5 lg:px-8">
+
+        <div class="scene-card overflow-hidden rounded-[36px] p-8 sm:p-12 lg:p-16">
+
+          <div class="grid items-center gap-12 lg:grid-cols-[1fr_0.8fr]">
+
+            <div>
+
+              <div class="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-[#20D6A4]">
+                One Community
+              </div>
+
+              <h2 class="section-title text-4xl font-black leading-tight sm:text-5xl">
+                找游戏、看测评、聊游戏，
+                <span class="gradient-text">
+                  一站式手游社区。
+                </span>
+              </h2>
+
+              <p class="mt-6 max-w-xl text-base leading-8 text-white/45">
+                从第一眼发现一款游戏，到和玩家交流体验，
+                TapTap 让每一次游戏探索都更有趣。
+              </p>
+
+              <div class="mt-8 flex flex-wrap gap-3">
+
+                <div class="rounded-full border border-white/8 bg-white/[0.025] px-4 py-2 text-sm text-white/55">
+                  <i class="fa-solid fa-magnifying-glass mr-2 text-[#20D6A4]"></i>
+                  找游戏
+                </div>
+
+                <div class="rounded-full border border-white/8 bg-white/[0.025] px-4 py-2 text-sm text-white/55">
+                  <i class="fa-solid fa-star mr-2 text-[#20D6A4]"></i>
+                  看测评
+                </div>
+
+                <div class="rounded-full border border-white/8 bg-white/[0.025] px-4 py-2 text-sm text-white/55">
+                  <i class="fa-solid fa-comments mr-2 text-[#20D6A4]"></i>
+                  聊游戏
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="relative">
+
+              <div class="aspect-video overflow-hidden rounded-3xl border border-white/10 bg-black/20">
+
+                <img
+                  src="https://placehold.co/1200x700/111716/20D6A4?text=GAME+TRAILER"
+                  alt="游戏宣传视频占位"
+                  class="h-full w-full object-cover opacity-75"
+                />
+
+                <div class="absolute inset-0 flex items-center justify-center">
+
+                  <div class="flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md">
+                    <i class="fa-solid fa-play ml-1 text-white"></i>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <p class="mt-3 text-center text-xs text-white/25">
+                游戏宣传短片视频位置，可替换为实际视频
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         Download CTA
+    ========================== -->
+
+    <section
+      id="download"
+      class="section pt-10"
+    >
+
+      <div class="mx-auto max-w-5xl px-5 lg:px-8">
+
+        <div class="relative overflow-hidden rounded-[40px] border border-[#20D6A4]/15 bg-[#111817] p-8 text-center sm:p-12 lg:p-16">
+
+          <div
+            class="absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#20D6A4]/10 blur-[90px]"
+          ></div>
+
+          <div class="relative">
+
+            <div class="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-[#20D6A4]/15 bg-[#20D6A4]/5 px-4 py-2 text-xs font-semibold text-[#69edc6]">
+              <i class="fa-solid fa-mobile-screen-button"></i>
+              TapTap APP
+            </div>
+
+            <h2 class="text-4xl font-black tracking-[-0.04em] sm:text-6xl">
+              现在就去发现
+              <span class="gradient-text">
+                下一款好游戏
+              </span>
+            </h2>
+
+            <p class="mx-auto mt-5 max-w-xl text-base leading-8 text-white/40">
+              免费下载 TapTap，发现游戏、关注社区，
+              和更多同好玩家一起玩。
+            </p>
+
+
+            <div class="mt-10 flex flex-col items-center justify-center gap-8 sm:flex-row">
+
+              <div class="qr-placeholder h-36 w-36 rounded-2xl p-3 shadow-2xl">
+
+                <div class="flex h-full w-full items-center justify-center">
+
+                  <div class="text-center text-xs font-bold text-[#101414]">
+                    QR<br />
+                    CODE
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="text-left">
+
+                <div class="text-sm text-white/40">
+                  扫码下载 TapTap
+                </div>
+
+                <div class="mt-2 text-lg font-bold">
+                  支持 Android / iOS
+                </div>
+
+                <div class="mt-5 flex flex-wrap gap-3">
+
+                  <a
+                    href="#"
+                    class="download-btn inline-flex items-center gap-2 rounded-full bg-[#20D6A4] px-6 py-3 text-sm font-bold text-[#08100e]"
+                  >
+                    <i class="fa-brands fa-android"></i>
+                    Android
+                  </a>
+
+                  <a
+                    href="#"
+                    class="download-btn inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-6 py-3 text-sm font-bold text-white"
+                  >
+                    <i class="fa-brands fa-apple"></i>
+                    iOS
+                  </a>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       Footer
+  ========================== -->
+
+  <footer class="border-t border-white/5">
+
+    <div class="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-9 text-sm text-white/30 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+
+      <div>
+        © 2026 TapTap. All Rights Reserved.
+      </div>
+
+      <div class="flex items-center gap-5">
+
+        <a
+          href="#"
+          aria-label="微信"
+          class="transition hover:text-[#20D6A4]"
+        >
+          <i class="fa-brands fa-weixin"></i>
+        </a>
+
+        <a
+          href="#"
+          aria-label="微博"
+          class="transition hover:text-[#20D6A4]"
+        >
+          <i class="fa-brands fa-weibo"></i>
+        </a>
+
+        <a
+          href="#"
+          aria-label="Bilibili"
+          class="transition hover:text-[#20D6A4]"
+        >
+          <i class="fa-brands fa-bilibili"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================================================
+       Animation Libraries
+  ========================================================== -->
+
+  <!-- Lenis -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <!-- GSAP ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <!-- Vanilla Tilt -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+
+  <!-- tsParticles -->
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/engine@3.5.0/tsparticles.engine.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@3.5.0/tsparticles.basic.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/interaction-particles-collisions@3.5.0/tsparticles.interaction.particles.collisions.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/interaction-particles-links@3.5.0/tsparticles.interaction.particles.links.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/interaction-external-trail@3.5.0/tsparticles.interaction.external.trail.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/move-base@3.5.0/tsparticles.move.base.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/move-parallax@3.5.0/tsparticles.move.parallax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/shape-circle@3.5.0/tsparticles.shape.circle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/updater-opacity@3.5.0/tsparticles.updater.opacity.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/updater-out-modes@3.5.0/tsparticles.updater.out-modes.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/updater-size@3.5.0/tsparticles.updater.size.min.js"></script>
+
+  <script>
+    /* =========================================================
+       TapTap Landing Page Motion System
+       ========================================================= */
+
+    (() => {
+      "use strict";
+
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      const isMobile = window.matchMedia(
+        "(max-width: 767px)"
+      ).matches;
+
+      /* ---------------------------------------------------------
+         Scroll Progress
+      --------------------------------------------------------- */
+
+      const progressBar = document.getElementById("scroll-progress");
+
+      function updateProgress() {
+        const scrollTop =
+          window.scrollY ||
+          document.documentElement.scrollTop;
+
+        const scrollHeight =
+          document.documentElement.scrollHeight -
+          window.innerHeight;
+
+        const progress =
+          scrollHeight > 0
+            ? (scrollTop / scrollHeight) * 100
+            : 0;
+
+        progressBar.style.width = `${progress}%`;
+      }
+
+      window.addEventListener(
+        "scroll",
+        updateProgress,
+        { passive: true }
+      );
+
+      updateProgress();
+
+
+      /* ---------------------------------------------------------
+         Navbar
+      --------------------------------------------------------- */
+
+      const navbar =
+        document.getElementById("navbar");
+
+      function updateNavbar() {
+        navbar.classList.toggle(
+          "nav-scrolled",
+          window.scrollY > 40
+        );
+      }
+
+      window.addEventListener(
+        "scroll",
+        updateNavbar,
+        { passive: true }
+      );
+
+      updateNavbar();
+
+
+      /* ---------------------------------------------------------
+         Reduced Motion
+      --------------------------------------------------------- */
+
+      if (reduceMotion) {
+
+        document
+          .querySelectorAll(".hero-title-inner")
+          .forEach((el) => {
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+          });
+
+        document
+          .querySelectorAll(".counter")
+          .forEach((el) => {
+            const value =
+              Number(el.dataset.target) || 0;
+
+            el.textContent =
+              value.toLocaleString("en-US");
+          });
+
+        return;
+      }
+
+
+      /* ---------------------------------------------------------
+         Lenis Smooth Scroll
+      --------------------------------------------------------- */
+
+      const lenis = new Lenis({
+        duration: 1.05,
+        smoothWheel: true,
+        syncTouch: false,
+        wheelMultiplier: 0.85,
+        touchMultiplier: 1,
+        lerp: 0.085
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
+      requestAnimationFrame(raf);
+
+
+      /* ---------------------------------------------------------
+         GSAP
+      --------------------------------------------------------- */
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      /*
+       * 让 ScrollTrigger 与 Lenis 保持同步
+       */
+      lenis.on("scroll", ScrollTrigger.update);
+
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+
+      gsap.ticker.lagSmoothing(1000, 16);
+
+
+      /* ---------------------------------------------------------
+         Hero Title
+         逐行动画
+      --------------------------------------------------------- */
+
+      const heroTitle =
+        document.querySelectorAll(
+          ".hero-title-inner"
+        );
+
+      gsap.to(heroTitle, {
+        y: "0%",
+        opacity: 1,
+        duration: 1.0,
+        stagger: 0.18,
+        ease: "power3.out",
+        delay: 0.12
+      });
+
+
+      /* ---------------------------------------------------------
+         Hero Parallax
+         手机 / 文案 / 浮动卡片 / 光晕
+      --------------------------------------------------------- */
+
+      if (!isMobile) {
+
+        gsap.utils.toArray(
+          "[data-parallax]"
+        ).forEach((element) => {
+
+          const strength =
+            Number(
+              element.dataset.parallax
+            ) || 0.2;
+
+          gsap.to(element, {
+            y: () =>
+              window.innerHeight *
+              strength *
+              -0.45,
+
+            ease: "none",
+
+            scrollTrigger: {
+              trigger: "#hero",
+              start: "top top",
+              end: "bottom top",
+              scrub: 0.8
+            }
+          });
+
+        });
+
+      }
+
+
+      /* ---------------------------------------------------------
+         Features Cards
+         依次入场
+      --------------------------------------------------------- */
+
+      const featureCards =
+        gsap.utils.toArray(
+          ".feature-card"
+        );
+
+      gsap.fromTo(
+        featureCards,
+        {
+          y: 55,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#features",
+            start: "top 72%",
+            once: true
+          }
+        }
+      );
+
+
+      /* ---------------------------------------------------------
+         Section Titles
+      --------------------------------------------------------- */
+
+      gsap.utils.toArray(
+        ".section-title"
+      ).forEach((title) => {
+
+        gsap.fromTo(
+          title,
+          {
+            y: 35,
+            opacity: 0
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: title,
+              start: "top 85%",
+              once: true
+            }
+          }
+        );
+
+      });
+
+
+      /* ---------------------------------------------------------
+         Generic Content Reveal
+      --------------------------------------------------------- */
+
+      gsap.utils.toArray(
+        ".scene-card, #download > div"
+      ).forEach((element) => {
+
+        gsap.fromTo(
+          element,
+          {
+            y: 45,
+            opacity: 0
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.85,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: element,
+              start: "top 82%",
+              once: true
+            }
+          }
+        );
+
+      });
+
+
+      /* ---------------------------------------------------------
+         Counter Animation
+      --------------------------------------------------------- */
+
+      document
+        .querySelectorAll(".counter")
+        .forEach((counter) => {
+
+          const target =
+            Number(
+              counter.dataset.target
+            ) || 0;
+
+          const state = {
+            value: 0
+          };
+
+          ScrollTrigger.create({
+            trigger: counter,
+            start: "top 85%",
+            once: true,
+            onEnter: () => {
+
+              gsap.to(state, {
+                value: target,
+                duration: 1.7,
+                ease: "power2.out",
+
+                onUpdate: () => {
+                  counter.textContent =
+                    Math.round(
+                      state.value
+                    ).toLocaleString("en-US");
+                }
+              });
+
+            }
+          });
+
+        });
+
+
+      /* ---------------------------------------------------------
+         Vanilla Tilt
+         桌面端才启用
+      --------------------------------------------------------- */
+
+      if (
+        !isMobile &&
+        window.VanillaTilt
+      ) {
+
+        const tiltElements =
+          document.querySelectorAll(
+            "[data-tilt]"
+          );
+
+        VanillaTilt.init(
+          tiltElements,
+          {
+            max: 5,
+            speed: 650,
+            glare: false,
+            scale: 1.008,
+            perspective: 1100,
+            transition: true,
+            easing:
+              "cubic-bezier(.22,1,.36,1)"
+          }
+        );
+
+      }
+
+
+      /* ---------------------------------------------------------
+         tsParticles
+         轻量青绿色粒子
+      --------------------------------------------------------- */
+
+      async function initParticles() {
+
+        if (
+          typeof tsParticles === "undefined"
+        ) {
+          return;
+        }
+
+        const container =
+          document.getElementById(
+            "particles-js"
+          );
+
+        if (!container) {
+          return;
+        }
+
+        try {
+
+          await tsParticles.load({
+            id: "particles-js",
+
+            options: {
+
+              fullScreen: {
+                enable: false
+              },
+
+              fpsLimit: 45,
+
+              detectRetina: false,
+
+              background: {
+                color: "transparent"
+              },
+
+              particles: {
+
+                number: {
+                  value: isMobile ? 22 : 38,
+                  density: {
+                    enable: true,
+                    area: 1100
+                  }
+                },
+
+                color: {
+                  value: "#20D6A4"
+                },
+
+                opacity: {
+                  value: {
+                    min: 0.12,
+                    max: 0.42
+                  },
+                  animation: {
+                    enable: true,
+                    speed: 0.35,
+                    minimumValue: 0.08,
+                    sync: false
+                  }
+                },
+
+                size: {
+                  value: {
+                    min: 0.7,
+                    max: 2
+                  }
+                },
+
+                links: {
+                  enable: true,
+                  distance: isMobile ? 100 : 125,
+                  color: "#20D6A4",
+                  opacity: 0.13,
+                  width: 0.6
+                },
+
+                move: {
+                  enable: true,
+                  speed: isMobile ? 0.25 : 0.4,
+                  direction: "none",
+                  random: true,
+                  straight: false,
+                  outModes: {
+                    default: "out"
+                  }
+                }
+
+              },
+
+              interactivity: {
+
+                detectsOn: "window",
+
+                events: {
+
+                  onHover: {
+                    enable: !isMobile,
+                    mode: "grab"
+                  },
+
+                  resize: true
+
+                },
+
+                modes: {
+
+                  grab: {
+                    distance: 135,
+                    links: {
+                      opacity: 0.28
+                    }
+                  }
+
+                }
+
+              },
+
+              responsive: [
+                {
+                  maxWidth: 767,
+
+                  options: {
+
+                    particles: {
+                      number: {
+                        value: 18
+                      },
+
+                      links: {
+                        enable: true,
+                        distance: 85
+                      }
+                    }
+
+                  }
+                }
+              ]
+
+            }
+
+          });
+
+        } catch (error) {
+          console.warn(
+            "tsParticles initialization failed:",
+            error
+          );
+        }
+
+      }
+
+      initParticles();
+
+
+      /* ---------------------------------------------------------
+         Screenshot Carousel
+         保留自动轮播 + 左右按钮
+      --------------------------------------------------------- */
+
+      const track =
+        document.getElementById(
+          "screenshotTrack"
+        );
+
+      const items =
+        track
+          ? Array.from(
+              track.children
+            )
+          : [];
+
+      const prev =
+        document.getElementById(
+          "prevBtn"
+        );
+
+      const next =
+        document.getElementById(
+          "nextBtn"
+        );
+
+      let currentIndex = 0;
+
+      function getStep() {
+
+        if (!items.length) {
+          return 0;
+        }
+
+        const itemWidth =
+          items[0].getBoundingClientRect().width;
+
+        const gap =
+          parseFloat(
+            getComputedStyle(track).gap
+          ) || 0;
+
+        return itemWidth + gap;
+      }
+
+      function updateCarousel() {
+
+        if (!track || !items.length) {
+          return;
+        }
+
+        const viewport =
+          track.parentElement;
+
+        const viewportWidth =
+          viewport.getBoundingClientRect().width;
+
+        const step = getStep();
+
+        const maxTranslate =
+          Math.max(
+            0,
+            track.scrollWidth -
+              viewportWidth
+          );
+
+        let translate =
+          currentIndex * step;
+
+        translate =
+          Math.min(
+            translate,
+            maxTranslate
+          );
+
+        track.style.transform =
+          `translate3d(${-translate}px,0,0)`;
+
+      }
+
+      function nextSlide() {
+
+        if (!items.length) {
+          return;
+        }
+
+        currentIndex++;
+
+        if (
+          currentIndex >=
+          items.length
+        ) {
+          currentIndex = 0;
+        }
+
+        updateCarousel();
+
+      }
+
+      function prevSlide() {
+
+        if (!items.length) {
+          return;
+        }
+
+        currentIndex--;
+
+        if (currentIndex < 0) {
+          currentIndex =
+            items.length - 1;
+        }
+
+        updateCarousel();
+
+      }
+
+      if (next) {
+        next.addEventListener(
+          "click",
+          nextSlide
+        );
+      }
+
+      if (prev) {
+        prev.addEventListener(
+          "click",
+          prevSlide
+        );
+      }
+
+      let carouselTimer =
+        setInterval(
+          nextSlide,
+          3600
+        );
+
+      /*
+       * 鼠标悬停时暂停自动轮播，
+       * 避免用户操作过程中产生干扰。
+       */
+      if (track) {
+
+        track.addEventListener(
+          "mouseenter",
+          () => {
+            clearInterval(
+              carouselTimer
+            );
+          }
+        );
+
+        track.addEventListener(
+          "mouseleave",
+          () => {
+            clearInterval(
+              carouselTimer
+            );
+
+            carouselTimer =
+              setInterval(
+                nextSlide,
+                3600
+              );
+          }
+        );
+
+      }
+
+      window.addEventListener(
+        "resize",
+        updateCarousel,
+        { passive: true }
+      );
+
+      updateCarousel();
+
+
+      /* ---------------------------------------------------------
+         页面离开后台时暂停轮播
+         减少后台 CPU 消耗
+      --------------------------------------------------------- */
+
+      document.addEventListener(
+        "visibilitychange",
+        () => {
+
+          if (
+            document.hidden
+          ) {
+
+            clearInterval(
+              carouselTimer
+            );
+
+          } else {
+
+            clearInterval(
+              carouselTimer
+            );
+
+            carouselTimer =
+              setInterval(
+                nextSlide,
+                3600
+              );
+
+          }
+
+        }
+      );
+
+
+      /* ---------------------------------------------------------
+         Refresh ScrollTrigger
+      --------------------------------------------------------- */
+
+      window.addEventListener(
+        "load",
+        () => {
+
+          ScrollTrigger.refresh();
+
+          setTimeout(
+            () =>
+              ScrollTrigger.refresh(),
+            500
+          );
+
+        }
+      );
+
+    })();
+  </script>
+
+</body>
+</html>
