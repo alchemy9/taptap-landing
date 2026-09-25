@@ -1169,7 +1169,7 @@
         </div>
 
 
-        <div class="relative mt-14 mx-auto" style="max-width: 80%;">
+        <div id="carouselContainer" class="relative mt-14 mx-auto" style="max-width: 80%;">
 
           <div class="screenshot-viewport">
 
@@ -2215,6 +2215,38 @@
           "click",
           nextSlide
         );
+      }
+
+      // 鼠标滚轮控制轮播
+      const carouselContainer = document.getElementById("carouselContainer");
+      let wheelTimeout = null;
+
+      if (carouselContainer) {
+        // 鼠标进入轮播区时暂停页面滚动
+        carouselContainer.addEventListener("mouseenter", () => {
+          lenis.stop();
+        });
+
+        // 鼠标离开轮播区时恢复页面滚动
+        carouselContainer.addEventListener("mouseleave", () => {
+          lenis.start();
+        });
+
+        carouselContainer.addEventListener("wheel", (e) => {
+          e.preventDefault();
+
+          if (wheelTimeout) return;
+
+          wheelTimeout = setTimeout(() => {
+            wheelTimeout = null;
+          }, 500);
+
+          if (e.deltaY > 0) {
+            nextSlide();
+          } else {
+            prevSlide();
+          }
+        }, { passive: false });
       }
 
       let carouselTimer =
