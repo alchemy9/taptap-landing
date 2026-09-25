@@ -61,6 +61,8 @@
         "Microsoft YaHei",
         sans-serif;
       overflow-x: hidden;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     ::selection {
@@ -355,6 +357,33 @@
       transition:
         transform 0.35s cubic-bezier(.22,1,.36,1),
         box-shadow 0.35s ease;
+    }
+
+    .btn-text,
+    .btn-version {
+      display: block;
+      transition: transform 0.3s cubic-bezier(.22,1,.36,1), opacity 0.3s ease;
+    }
+
+    .btn-version {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 100%);
+      opacity: 0;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .download-btn:hover .btn-text {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    .download-btn:hover .btn-version {
+      transform: translate(-50%, -50%);
+      opacity: 1;
     }
 
     .download-btn:hover {
@@ -1348,11 +1377,6 @@
 
           <div class="relative">
 
-            <div class="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-[#20D6A4]/15 bg-[#20D6A4]/5 px-4 py-2 text-xs font-semibold text-[#69edc6]">
-              <i class="fa-solid fa-mobile-screen-button"></i>
-              TapTap APP
-            </div>
-
             <h2 class="text-4xl font-black tracking-[-0.04em] sm:text-6xl">
               现在就去发现
               <span class="gradient-text">
@@ -1391,16 +1415,24 @@
 
                   <a
                     href="javascript:void(0)"
-                    class="download-btn inline-flex items-center gap-2 rounded-full bg-[#20D6A4] px-6 py-3 text-sm font-bold text-[#08100e]"
+                    class="download-btn inline-flex items-center justify-center gap-2 rounded-full bg-[#20D6A4] px-6 py-3 text-sm font-bold text-[#08100e] min-w-[140px]"
                   >
-                    Android
+                    <span class="btn-text inline-flex items-center gap-2">
+                      <i class="fa-brands fa-android"></i>
+                      Android
+                    </span>
+                    <span class="btn-version">v2.8.0 · 45.6MB</span>
                   </a>
 
                   <a
                     href="javascript:void(0)"
-                    class="download-btn inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-6 py-3 text-sm font-bold text-white"
+                    class="download-btn inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-6 py-3 text-sm font-bold text-white min-w-[140px]"
                   >
-                    iOS
+                    <span class="btn-text inline-flex items-center gap-2">
+                      <i class="fa-brands fa-apple"></i>
+                      iOS
+                    </span>
+                    <span class="btn-version">v2.8.0 · 52.3MB</span>
                   </a>
 
                 </div>
