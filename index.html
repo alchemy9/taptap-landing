@@ -105,6 +105,29 @@
       box-shadow: 0 8px 40px rgba(0, 0, 0, 0.16);
     }
 
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #20d6a4;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link.active {
+      color: #20d6a4 !important;
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
     /* =========================
        Hero
     ========================== */
@@ -574,17 +597,7 @@
     ========================== */
 
     .gradient-text {
-      background-size: 200% 200% !important;
-      animation: gradient-flow 4s ease infinite;
-    }
-
-    @keyframes gradient-flow {
-      0%, 100% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
+      background-size: 200% 200%;
     }
 
     /* =========================
@@ -705,21 +718,21 @@
         <nav class="hidden items-center gap-8 md:flex">
           <a
             href="#features"
-            class="text-sm text-white/65 transition hover:text-white"
+            class="nav-link text-sm text-white/65 transition hover:text-white"
           >
             产品亮点
           </a>
 
           <a
             href="#preview"
-            class="text-sm text-white/65 transition hover:text-white"
+            class="nav-link text-sm text-white/65 transition hover:text-white"
           >
             APP预览
           </a>
 
           <a
             href="#scene"
-            class="text-sm text-white/65 transition hover:text-white"
+            class="nav-link text-sm text-white/65 transition hover:text-white"
           >
             游戏社区
           </a>
@@ -1124,31 +1137,12 @@
 
           </div>
 
-
-          <div class="flex gap-3">
-
-            <button
-              id="prevBtn"
-              class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.025] text-white/70 transition hover:border-[#20D6A4]/30 hover:text-[#20D6A4]"
-              aria-label="上一张"
-            >
-              <i class="fa-solid fa-arrow-left"></i>
-            </button>
-
-            <button
-              id="nextBtn"
-              class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.025] text-white/70 transition hover:border-[#20D6A4]/30 hover:text-[#20D6A4]"
-              aria-label="下一张"
-            >
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-
-          </div>
-
         </div>
 
 
-        <div class="screenshot-viewport mt-14">
+        <div class="relative mt-14 mx-auto" style="max-width: 80%;">
+
+          <div class="screenshot-viewport">
 
           <div
             id="screenshotTrack"
@@ -1221,6 +1215,22 @@
             </div>
 
           </div>
+
+          <button
+            id="prevBtn"
+            class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.025] text-white/70 transition hover:border-[#20D6A4]/30 hover:text-[#20D6A4] z-10"
+            aria-label="上一张"
+          >
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+
+          <button
+            id="nextBtn"
+            class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.025] text-white/70 transition hover:border-[#20D6A4]/30 hover:text-[#20D6A4] z-10"
+            aria-label="下一张"
+          >
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
 
         </div>
 
@@ -1556,6 +1566,42 @@
 
 
       /* ---------------------------------------------------------
+         Nav Active Link - 滚动高亮导航
+      --------------------------------------------------------- */
+
+      const navLinks = document.querySelectorAll(".nav-link");
+      const sections = ["features", "preview", "scene", "download"];
+
+      function updateActiveNav() {
+        const scrollPos = window.scrollY + 120;
+
+        let currentSection = "";
+
+        sections.forEach((id) => {
+          const section = document.getElementById(id);
+          if (section && section.offsetTop <= scrollPos) {
+            currentSection = id;
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === "#" + currentSection) {
+            link.classList.add("active");
+          }
+        });
+      }
+
+      window.addEventListener(
+        "scroll",
+        updateActiveNav,
+        { passive: true }
+      );
+
+      updateActiveNav();
+
+
+      /* ---------------------------------------------------------
          Reduced Motion
       --------------------------------------------------------- */
 
@@ -1876,7 +1922,7 @@
                 enable: false
               },
 
-              fpsLimit: 45,
+              fpsLimit: 30,
 
               detectRetina: false,
 
@@ -1887,10 +1933,10 @@
               particles: {
 
                 number: {
-                  value: isMobile ? 22 : 38,
+                  value: isMobile ? 12 : 20,
                   density: {
                     enable: true,
-                    area: 1100
+                    area: 1500
                   }
                 },
 
@@ -1947,12 +1993,7 @@
 
                   onHover: {
                     enable: !isMobile,
-                    mode: ["grab", "bubble"]
-                  },
-
-                  onClick: {
-                    enable: !isMobile,
-                    mode: "push"
+                    mode: "grab"
                   },
 
                   resize: true
@@ -1962,21 +2003,10 @@
                 modes: {
 
                   grab: {
-                    distance: 135,
+                    distance: 120,
                     links: {
-                      opacity: 0.28
+                      opacity: 0.25
                     }
-                  },
-
-                  bubble: {
-                    distance: 200,
-                    size: 6,
-                    duration: 2,
-                    opacity: 0.6
-                  },
-
-                  push: {
-                    quantity: 4
                   }
 
                 }
@@ -2062,6 +2092,10 @@
           parseFloat(
             getComputedStyle(track).gap
           ) || 0;
+
+        if (!isMobile) {
+          return 150;
+        }
 
         return itemWidth + gap;
       }
@@ -2274,8 +2308,8 @@
         });
 
         function animateGlow() {
-          glowX += (mouseX - glowX) * 0.08;
-          glowY += (mouseY - glowY) * 0.08;
+          glowX += (mouseX - glowX) * 0.12;
+          glowY += (mouseY - glowY) * 0.12;
           cursorGlow.style.left = glowX + "px";
           cursorGlow.style.top = glowY + "px";
           requestAnimationFrame(animateGlow);
@@ -2292,7 +2326,7 @@
 
         document.addEventListener("mousemove", (e) => {
           const now = Date.now();
-          if (now - lastTrailTime < 40) return;
+          if (now - lastTrailTime < 100) return;
           lastTrailTime = now;
 
           const particle = document.createElement("div");
@@ -2326,7 +2360,7 @@
         --------------------------------------------------------- */
 
         document.addEventListener("click", (e) => {
-          const burstCount = 12;
+          const burstCount = 6;
 
           for (let i = 0; i < burstCount; i++) {
             const particle = document.createElement("div");
